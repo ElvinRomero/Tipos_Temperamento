@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Cuatro Tipos de Temperamento Humano | Plataforma Educativa</title>
+    <style>
+        /* ==========================================================================
+           1. VARIABLES Y CSS RESET
+           ========================================================================== */
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-dark: #312e81;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --success: #10b981;
+            --error: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-theme {
+            --bg-body: #0b0f19;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ==========================================================================
+           2. HEADER Y HERRAMIENTAS
+           ========================================================================== */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-title h1 {
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            font-weight: 700;
+        }
+
+        .logo-title p {
+            font-size: 0.85rem;
+            color: #c7d2fe;
+        }
+
+        .tools-bar {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 14px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           3. NAVEGACIÓN SPA (PESTAÑAS)
+           ========================================================================== */
+        nav {
+            background: var(--bg-card);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 68px;
+            z-index: 90;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: thin;
+            padding: 6px 0;
+        }
+
+        .nav-item {
+            padding: 0 4px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white !important;
+            box-shadow: var(--shadow);
+        }
+
+        /* ==========================================================================
+           4. PANELES DE CONTENIDO
+           ========================================================================== */
+        main {
+            flex: 1;
+            padding: 24px 0;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .instructor-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--accent);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .instructor-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+        }
+
+        .instructor-info h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .instructor-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .section-header {
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--primary-light);
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .card-tag {
+            align-self: flex-start;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .card p, .card ul {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .card ul {
+            padding-left: 18px;
+        }
+
+        .btn-action {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-light);
+            box-shadow: var(--shadow);
+        }
+
+        /* ==========================================================================
+           5. MODALES FLOTANTES
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 16px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            max-width: 750px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            animation: scaleUp 0.3s ease-in-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--bg-body);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .modal-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            padding-right: 40px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* ==========================================================================
+           6. EVALUACIÓN GAMIFICADA
+           ========================================================================== */
+        .quiz-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-light);
+        }
+
+        .quiz-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            background: var(--bg-body);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+        }
+
+        .stat-badge {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .timer-container {
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: var(--success);
+            transition: width 1s linear, background-color 0.3s ease;
+        }
+
+        .timer-bar.warning { background: var(--accent); }
+        .timer-bar.danger { background: var(--error); }
+
+        .question-box {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: var(--bg-body);
+            border: 2px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary-light);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success) !important;
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: var(--success) !important;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--error) !important;
+            background: rgba(239, 68, 68, 0.15) !important;
+            color: var(--error) !important;
+        }
+
+        .feedback-box {
+            background: rgba(99, 102, 241, 0.08);
+            border-left: 5px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .feedback-box.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-title {
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-badge {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .score-badge .number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .report-item {
+            background: var(--bg-body);
+            padding: 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .report-item .val {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .report-item .lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        body.focus-mode header,
+        body.focus-mode nav,
+        body.focus-mode .instructor-card,
+        body.focus-mode footer {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; align-items: flex-start; }
+            .tools-bar { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-content">
+            <div class="logo-title">
+                <h1>Los Cuatro Tipos de Temperamento Humano</h1>
+                <p>Definición, características, ejemplos y desarrollo vital</p>
+            </div>
+            <div class="tools-bar">
+                <button class="tool-btn" onclick="toggleDarkMode()">🌓 Tema</button>
+                <button class="tool-btn" onclick="toggleFocusMode()">◉ Enfoque</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN SPA -->
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li class="nav-item"><button class="nav-link active" onclick="showTab('tab-inicio', this)">Inicio</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-conceptos', this)">1. Conceptos y Origen</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-sanguineo', this)">2. Sanguíneo</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-colerico', this)">3. Colérico</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-melancolico', this)">4. Melancólico</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-flematico', this)">5. Flemático</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-analisis', this)">6. Desarrollo y Freud</button></li>
+                <li class="nav-item"><button class="nav-link" onclick="showTab('tab-evaluacion', this)">7. Evaluación Gamificada</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container">
+
+        <!-- MENSAJE DE BIENVENIDA -->
+        <div class="instructor-card">
+            <div class="instructor-avatar">MS</div>
+            <div class="instructor-info">
+                <h3>Mensaje del Instructor Melida Soto</h3>
+                <p>"¡Bienvenido a esta plataforma interactiva sobre la psicología de los temperamentos humanos! Explora los módulos diseñados rigurosamente a partir del documento oficial para comprender las diferencias individuales, sus contextos históricos, ejemplos prácticos y pon a prueba tus conocimientos al finalizar."</p>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 0: INICIO -->
+        <section id="tab-inicio" class="tab-panel active">
+            <h2 class="section-header">Estructura del Estudio de los Temperamentos</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-tag">Módulo 1</span>
+                    <h3>Conceptos y Origen Histórico</h3>
+                    <p>Diferencias entre temperamento, carácter y personalidad. Origen en Hipócrates y Galeno mediante la teoría de los cuatro humores.</p>
+                    <button class="btn-action" onclick="switchNavTab(1)">Acceder al Módulo ►</button>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Módulo 2</span>
+                    <h3>Los Cuatro Temperamentos</h3>
+                    <p>Análisis detallado e individual de los tipos Sanguíneo, Colérico, Melancólico y Flemático con sus características principales, etapas de fortalecimiento, fortalezas y aspectos a desarrollar.</p>
+                    <button class="btn-action" onclick="switchNavTab(2)">Acceder a Sanguíneo ►</button>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Módulo 3</span>
+                    <h3>Desarrollo Vital y Psicoanálisis</h3>
+                    <p>Influencia de las etapas de la vida, aportes de Sigmund Freud, pluralidad de temperamentos y síntesis comparativa.</p>
+                    <button class="btn-action" onclick="switchNavTab(6)">Acceder a Desarrollo ►</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 1: CONCEPTOS Y ORIGEN -->
+        <section id="tab-conceptos" class="tab-panel">
+            <h2 class="section-header">1, 2 & 3. Definición, Distinciones y Origen Histórico</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-tag">Conceptos Clave</span>
+                    <h3>Temperamento, Carácter y Personalidad</h3>
+                    <p><strong>Temperamento:</strong> Tendencias relativamente tempranas en la reactividad emocional, la actividad y la respuesta al entorno.<br>
+                    <strong>Carácter:</strong> Hábitos y formas de actuar que se desarrollan mediante la educación, las decisiones, los valores y las experiencias.<br>
+                    <strong>Personalidad:</strong> Organización más amplia de características emocionales, cognitivas y conductuales que distingue a una persona.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Origen Histórico</span>
+                    <h3>Hipócrates y Galeno</h3>
+                    <p>Hipócrates relacionó la salud y el comportamiento con cuatro humores corporales. Galeno desarrolló esta tradición y consolidó la clasificación:<br>
+                    • <em>Sanguíneo:</em> Asociado con la sangre.<br>
+                    • <em>Colérico:</em> Asociado con la bilis amarilla.<br>
+                    • <em>Melancólico:</em> Asociado con la bilis negra.<br>
+                    • <em>Flemático:</em> Asociado con la flema.<br>
+                    <em>Nota:</em> Son concepciones médicas antiguas sin validez fisiológica actual, pero de gran valor histórico.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Herramienta</span>
+                    <h3>Síntesis Comparativa General</h3>
+                    <p>Visualiza el resumen de rasgos, fortalezas y posibles dificultades de los cuatro temperamentos en una tabla interactiva.</p>
+                    <button class="btn-action" onclick="openModal('modal-tabla')">Abrir Tabla Comparativa 📊</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 2: TEMPERAMENTO SANGUÍNEO -->
+        <section id="tab-sanguineo" class="tab-panel">
+            <h2 class="section-header">4. Temperamento Sanguíneo</h2>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Definición</h3>
+                <p>En el modelo clásico, el temperamento sanguíneo se caracteriza por la sociabilidad, el entusiasmo, la expresividad emocional y la facilidad para establecer relaciones con otras personas. Quienes presentan rasgos asociados a este temperamento suelen disfrutar de las actividades grupales, conversar, compartir ideas y participar en experiencias nuevas. Pueden transmitir entusiasmo y contribuir a crear un ambiente agradable.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Características Principales</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Facilidad para relacionarse con otras personas.</li>
+                    <li>Expresión espontánea de emociones.</li>
+                    <li>Entusiasmo ante nuevas experiencias.</li>
+                    <li>Optimismo y disposición para participar.</li>
+                    <li>Capacidad para motivar a otras personas.</li>
+                    <li>Posible dificultad para mantener la concentración o la constancia en tareas prolongadas.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Ejemplo Cotidiano</h3>
+                <p>Una estudiante llega a una escuela nueva. Durante los primeros días conversa con sus compañeros, participa en actividades grupales y propone organizar un trabajo en equipo. Su facilidad para relacionarse ayuda a que otras personas se sientan integradas. Sin embargo, cuando debe realizar una tarea larga y repetitiva, puede distraerse con facilidad y necesitar una rutina que le ayude a terminarla. Este ejemplo muestra tanto una posible fortaleza —la sociabilidad— como una dificultad que puede trabajarse —la constancia—.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">¿En qué etapa de la vida se fortalece?</h3>
+                <p>Primera infancia, edad escolar y adolescencia. Las tendencias de sociabilidad y expresividad pueden observarse desde los primeros años, aunque no todos los niños las manifiestan de la misma manera. Durante la edad escolar, las experiencias de juego, la interacción con compañeros y la participación en actividades colectivas pueden ofrecer oportunidades para desarrollar habilidades sociales. En la adolescencia, la pertenencia a grupos y la construcción de la identidad pueden influir en la forma de expresar estas características. En la adultez, las experiencias sociales, el trabajo y las responsabilidades pueden ayudar a convertir el entusiasmo en habilidades de comunicación, liderazgo y cooperación. No significa que el temperamento sanguíneo se origine en una etapa determinada ni que toda persona sociable deba pertenecer a este tipo.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Fortalezas</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Comunicación interpersonal.</li>
+                        <li>Capacidad para generar entusiasmo.</li>
+                        <li>Facilidad para iniciar relaciones.</li>
+                        <li>Adaptación a determinadas situaciones sociales.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Aspectos que puede desarrollar</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Disciplina y organización.</li>
+                        <li>Escucha activa.</li>
+                        <li>Paciencia.</li>
+                        <li>Capacidad para concluir proyectos.</li>
+                        <li>Regulación de la impulsividad.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 3: TEMPERAMENTO COLÉRICO -->
+        <section id="tab-colerico" class="tab-panel">
+            <h2 class="section-header">5. Temperamento Colérico</h2>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Definición</h3>
+                <p>El temperamento colérico, según la clasificación tradicional, se asocia con la intensidad emocional, la iniciativa, la determinación y la orientación hacia los objetivos. Las personas con estos rasgos pueden actuar con decisión ante los problemas, asumir responsabilidades y buscar soluciones rápidas. En situaciones de presión, sin embargo, esa energía puede expresarse como impaciencia, irritabilidad o una tendencia a querer controlar los resultados. El temperamento colérico no equivale a ser agresivo. La agresividad es una conducta que depende de múltiples factores y no puede deducirse de una etiqueta temperamental.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Características Principales</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Determinación para alcanzar objetivos.</li>
+                    <li>Iniciativa y energía.</li>
+                    <li>Preferencia por actuar y resolver problemas.</li>
+                    <li>Tendencia a asumir el liderazgo.</li>
+                    <li>Comunicación directa.</li>
+                    <li>Posible impaciencia ante los obstáculos.</li>
+                    <li>Dificultad para aceptar opiniones diferentes cuando existe poca regulación emocional.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Ejemplo Cotidiano</h3>
+                <p>Un trabajador coordina un proyecto que debe entregarse en pocos días. Organiza las tareas, distribuye responsabilidades y toma decisiones rápidamente cuando surge un inconveniente. Estas capacidades ayudan al equipo a avanzar. Sin embargo, cuando un compañero comete un error, el coordinador puede reaccionar con dureza y generar tensión. Al aprender a controlar sus reacciones, escuchar otras perspectivas y comunicar sus expectativas con respeto, puede conservar su capacidad de liderazgo sin perjudicar las relaciones laborales.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">¿En qué etapa de la vida se fortalece?</h3>
+                <p>Infancia, adolescencia y adultez, mediante experiencias de autonomía y responsabilidad. En la infancia pueden observarse diferencias en la intensidad de las reacciones, la actividad y la frustración. La manera en que los adultos establecen límites y acompañan las emociones puede influir en el aprendizaje de la autorregulación. Durante la adolescencia, los retos académicos, la búsqueda de independencia y la participación en grupos pueden ofrecer oportunidades para aprender a defender ideas sin recurrir a respuestas impulsivas. En la adultez, el trabajo, el liderazgo y la toma de decisiones pueden favorecer una expresión más constructiva de la determinación. No existe una etapa universal en la que el temperamento colérico se fortalezca. Las experiencias individuales y el aprendizaje emocional influyen de manera diferente en cada persona.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Fortalezas</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Iniciativa.</li>
+                        <li>Determinación.</li>
+                        <li>Capacidad para tomar decisiones.</li>
+                        <li>Orientación hacia resultados.</li>
+                        <li>Disposición para asumir responsabilidades.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Aspectos que puede desarrollar</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Paciencia.</li>
+                        <li>Empatía.</li>
+                        <li>Escucha.</li>
+                        <li>Tolerancia a la frustración.</li>
+                        <li>Manejo del enojo.</li>
+                        <li>Colaboración y flexibilidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 4: TEMPERAMENTO MELANCÓLICO -->
+        <section id="tab-melancolico" class="tab-panel">
+            <h2 class="section-header">6. Temperamento Melancólico</h2>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Definición</h3>
+                <p>En la descripción tradicional, el temperamento melancólico se relaciona con la sensibilidad emocional, la reflexión, la observación detallada y la tendencia a analizar profundamente las experiencias. Las personas con rasgos asociados a este temperamento pueden ser cuidadosas, responsables y atentas a los detalles. Suelen valorar la preparación y pueden considerar diferentes posibilidades antes de tomar una decisión. Cuando estas tendencias se vuelven excesivas, pueden aparecer la preocupación persistente, la autocrítica o el perfeccionismo. Importante: el temperamento melancólico no es lo mismo que la depresión clínica. El nombre procede de una categoría histórica y no constituye un diagnóstico psicológico.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Características Principales</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Tendencia a la reflexión.</li>
+                    <li>Sensibilidad ante las experiencias.</li>
+                    <li>Atención a los detalles.</li>
+                    <li>Preferencia por planificar antes de actuar.</li>
+                    <li>Responsabilidad y cuidado en las tareas.</li>
+                    <li>Posible autocrítica excesiva.</li>
+                    <li>Tendencia a preocuparse por los errores o por los resultados.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Ejemplo Cotidiano</h3>
+                <p>Una estudiante debe presentar un proyecto. Investiga cuidadosamente, revisa sus fuentes, organiza la información y comprueba que cada detalle esté correcto. Gracias a su preparación, entrega un trabajo de gran calidad. Sin embargo, puede sentirse insatisfecha porque considera que todavía podría mejorarlo y teme cometer un error frente a sus compañeros. Aprender a establecer límites de tiempo y aceptar que no todo necesita ser perfecto le permitiría aprovechar su capacidad analítica sin quedar atrapada en la preocupación.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">¿En qué etapa de la vida se fortalece?</h3>
+                <p>Infancia, edad escolar, adolescencia y adultez, según las experiencias y las oportunidades de aprendizaje. Desde la infancia pueden apreciarse diferencias individuales en la sensibilidad, la cautela y la respuesta a situaciones nuevas. Durante la edad escolar, las tareas que requieren concentración, planificación y atención a los detalles pueden ayudar a desarrollar hábitos de estudio y reflexión. En la adolescencia, el desarrollo de la identidad y la importancia de la aceptación social pueden influir en la autocrítica y en la manera de interpretar las experiencias. En la adultez, las responsabilidades académicas, laborales y familiares pueden favorecer una reflexión más equilibrada, siempre que se desarrollen recursos para manejar la incertidumbre y las exigencias personales. Estas son posibilidades de desarrollo, no etapas rígidas ni exclusivas de este temperamento.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Fortalezas</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Capacidad de análisis.</li>
+                        <li>Atención a los detalles.</li>
+                        <li>Responsabilidad.</li>
+                        <li>Reflexión antes de actuar.</li>
+                        <li>Sensibilidad hacia las experiencias propias y ajenas.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Aspectos que puede desarrollar</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Flexibilidad.</li>
+                        <li>Confianza en sus decisiones.</li>
+                        <li>Aceptación de los errores.</li>
+                        <li>Manejo de la preocupación.</li>
+                        <li>Capacidad para reconocer sus logros.</li>
+                        <li>Equilibrio entre reflexión y acción.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 5: TEMPERAMENTO FLEMÁTICO -->
+        <section id="tab-flematico" class="tab-panel">
+            <h2 class="section-header">7. Temperamento Flemático</h2>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Definición</h3>
+                <p>El temperamento flemático, dentro del modelo clásico, se caracteriza por la calma, la estabilidad, la paciencia y una tendencia a responder de manera moderada ante los conflictos. Las personas con rasgos asociados a este temperamento pueden transmitir tranquilidad, escuchar antes de responder y contribuir a mantener relaciones estables. No obstante, una preferencia marcada por la tranquilidad puede convertirse en evitación de los conflictos, dificultad para tomar la iniciativa o resistencia a los cambios.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Características Principales</h3>
+                <ul style="padding-left: 20px;">
+                    <li>Calma ante determinadas situaciones.</li>
+                    <li>Paciencia.</li>
+                    <li>Constancia.</li>
+                    <li>Escucha y disposición para mediar.</li>
+                    <li>Preferencia por ambientes estables.</li>
+                    <li>Tendencia a evitar discusiones.</li>
+                    <li>Posible dificultad para actuar con rapidez cuando hay incertidumbre.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">Ejemplo Cotidiano</h3>
+                <p>En una familia surge una discusión porque sus integrantes no están de acuerdo sobre cómo organizar una actividad. Uno de ellos escucha las distintas opiniones, evita responder con agresividad y propone buscar una solución que beneficie a todos. Su actitud ayuda a reducir la tensión. Sin embargo, si siempre guarda silencio para evitar desacuerdos, puede terminar aceptando decisiones con las que no está de acuerdo. Aprender a expresar sus necesidades con firmeza le permitiría conservar la calma sin renunciar a sus propias opiniones.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;">
+                <h3 style="color:var(--primary); margin-bottom: 10px;">¿En qué etapa de la vida se fortalece?</h3>
+                <p>Desde la primera infancia y a lo largo de la vida, mediante la experiencia y el aprendizaje de la regulación emocional. Algunos niños muestran desde temprana edad una reactividad más moderada que otros. Sin embargo, la tranquilidad también puede depender de la seguridad del entorno, el cansancio, la situación y la manera en que los adultos acompañan sus emociones. Durante la infancia y la edad escolar, las rutinas y las relaciones de confianza pueden facilitar el aprendizaje de la paciencia y la convivencia. En la adolescencia y la adultez, las experiencias de cooperación, resolución de conflictos y responsabilidad pueden ayudar a desarrollar estabilidad emocional y una comunicación más asertiva. No debe confundirse la calma con la ausencia de emociones, ni la pasividad con una característica inevitable del temperamento.</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Fortalezas</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Paciencia.</li>
+                        <li>Estabilidad en situaciones difíciles.</li>
+                        <li>Capacidad para escuchar.</li>
+                        <li>Constancia.</li>
+                        <li>Disposición para mediar en conflictos.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 style="color:var(--primary); margin-bottom: 10px;">Aspectos que puede desarrollar</h3>
+                    <ul style="padding-left: 20px;">
+                        <li>Iniciativa.</li>
+                        <li>Asertividad.</li>
+                        <li>Adaptación a los cambios.</li>
+                        <li>Toma de decisiones.</li>
+                        <li>Expresión directa de necesidades y desacuerdos.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 6: DESARROLLO Y FREUD -->
+        <section id="tab-analisis" class="tab-panel">
+            <h2 class="section-header">9, 10 & 11. Etapas Vitales, Freud y Pluralidad</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-tag">Ciclo Vital</span>
+                    <h3>Influencia de las Etapas de la Vida</h3>
+                    <p><strong>Primera infancia:</strong> Diferencias en actividad y reactividad.<br>
+                    <strong>Edad escolar:</strong> Desarrollo de cooperación y perseverancia.<br>
+                    <strong>Adolescencia:</strong> Autonomía e identidad modifican la expresión emocional.<br>
+                    <strong>Adultez y Vejez:</strong> Responsabilidades y experiencia favorecen el equilibrio y la regulación.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Psicoanálisis</span>
+                    <h3>Aportes de Sigmund Freud</h3>
+                    <p>Freud no estableció los cuatro temperamentos clásicos. Su marco teórico aportó conceptos como el inconsciente, las experiencias infantiles, las instancias psíquicas (Ello, Yo, Superyó) y los mecanismos de defensa. Explica que la expresión emocional se ve influida por experiencias y recursos psicológicos.</p>
+                </div>
+                <div class="card">
+                    <span class="card-tag">Pluralidad</span>
+                    <h3>¿Se puede tener más de un temperamento?</h3>
+                    <p>Sí. Una persona puede ser sociable en reuniones, decidida en el trabajo, reflexiva en decisiones y calmada en conflictos. Las clasificaciones rígidas tienen límites; el comportamiento depende del contexto, objetivos y estado emocional.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 7: EVALUACIÓN GAMIFICADA -->
+        <section id="tab-evaluacion" class="tab-panel">
+            <h2 class="section-header">Evaluación Gamificada de Conocimientos</h2>
+            <div class="quiz-card">
+                <div id="quiz-screen-start">
+                    <h3 style="color:var(--primary); margin-bottom:10px;">Identificación del Estudiante</h3>
+                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">
+                        Responde 20 preguntas aleatorias basadas estrictamente en el documento oficial de los temperamentos. Cuentas con <strong>35 segundos</strong> por pregunta y <strong>5 vidas</strong>.
+                    </p>
+                    <div class="input-group">
+                        <label for="student-name-input">Nombre Completo:</label>
+                        <input type="text" id="student-name-input" placeholder="Ingresa tu nombre..." oninput="toggleStartQuizBtn()">
+                    </div>
+                    <button class="btn-action" id="btn-start-quiz" disabled onclick="initGamifiedQuiz()">INICIAR EVALUACIÓN ►</button>
+                </div>
+
+                <div id="quiz-screen-active" style="display:none;">
+                    <div class="quiz-stats">
+                        <span class="stat-badge">👤 <span id="quiz-student-display">---</span></span>
+                        <span class="stat-badge">❤️ Vidas: <span id="quiz-lives">5</span></span>
+                        <span class="stat-badge">🏆 Puntos: <span id="quiz-score">0</span></span>
+                        <span class="stat-badge">Pregunta <span id="quiz-current-num">1</span>/20</span>
+                    </div>
+
+                    <div class="timer-container">
+                        <div id="quiz-timer-bar" class="timer-bar"></div>
+                    </div>
+
+                    <div class="question-box" id="quiz-question-text">Cargando pregunta...</div>
+                    <div class="options-grid" id="quiz-options-grid"></div>
+
+                    <div class="feedback-box" id="quiz-feedback-box">
+                        <div class="feedback-title" id="quiz-feedback-title">Instructor Melida Soto</div>
+                        <div id="quiz-feedback-msg" style="font-size:0.9rem;">---</div>
+                    </div>
+
+                    <button class="btn-action" id="btn-next-question" style="display:none;" onclick="advanceQuizQuestion()">Siguiente Pregunta ►</button>
+                </div>
+
+                <div id="quiz-screen-report" style="display:none;">
+                    <div class="report-header">
+                        <h3 style="color:var(--primary); margin-bottom:12px;">Informe Final de Desempeño</h3>
+                        <div class="score-badge">
+                            <span class="number" id="final-score-val">0</span>
+                            <span style="font-size:0.75rem;">Puntos</span>
+                        </div>
+                        <h4 id="final-level-title">Nivel de Dominio</h4>
+                    </div>
+
+                    <div class="report-grid">
+                        <div class="report-item"><div class="val" id="rep-student">---</div><div class="lbl">Estudiante</div></div>
+                        <div class="report-item"><div class="val" id="rep-correct">0/20</div><div class="lbl">Aciertos</div></div>
+                        <div class="report-item"><div class="val" id="rep-errors">0</div><div class="lbl">Errores</div></div>
+                        <div class="report-item"><div class="val" id="rep-unanswered">0</div><div class="lbl">No Contestadas</div></div>
+                        <div class="report-item"><div class="val" id="rep-time">00:00</div><div class="lbl">Tiempo Total</div></div>
+                        <div class="report-item"><div class="val" id="rep-status">---</div><div class="lbl">Estado</div></div>
+                    </div>
+
+                    <div style="background:rgba(99,102,241,0.08); border:1px solid var(--secondary); padding:16px; border-radius:var(--radius); margin-bottom:20px;">
+                        <strong style="color:var(--primary);">Mensaje del Instructor Melida Soto:</strong>
+                        <p id="final-instructor-comment" style="font-size:0.9rem; margin-top:4px;">---</p>
+                    </div>
+
+                    <button class="btn-action" onclick="restartGamifiedQuiz()">Reiniciar Evaluación ↻</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+       MODALES
+       ========================================================================== -->
+    <div id="modal-tabla" class="modal-overlay">
+        <div class="modal-box" style="max-width:900px;">
+            <button class="modal-close" onclick="closeModal('modal-tabla')">✕</button>
+            <h3 class="modal-title">8. Comparación de los Cuatro Temperamentos</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>Temperamento</th><th>Rasgo Característico</th><th>Fortaleza Habitual</th><th>Dificultad Posible</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Sanguíneo</strong></td><td>Sociabilidad y entusiasmo</td><td>Comunicación</td><td>Distracción o falta de constancia</td></tr>
+                        <tr><td><strong>Colérico</strong></td><td>Determinación e intensidad</td><td>Iniciativa y decisión</td><td>Impaciencia o reacciones intensas</td></tr>
+                        <tr><td><strong>Melancólico</strong></td><td>Reflexión y sensibilidad</td><td>Análisis y atención al detalle</td><td>Autocrítica o preocupación excesiva</td></tr>
+                        <tr><td><strong>Flemático</strong></td><td>Calma y estabilidad</td><td>Paciencia y conciliación</td><td>Evitación de conflictos o pasividad</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:12px;">* Esta tabla resume descripciones tradicionales. No es una prueba psicológica ni clasifica de forma rígida.</p>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function showTab(tabId, btn) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (btn) btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchNavTab(idx) {
+            const links = document.querySelectorAll('.nav-link');
+            if (links[idx]) links[idx].click();
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); };
+
+        function toggleDarkMode() { document.body.classList.toggle('dark-theme'); }
+        function toggleFocusMode() { document.body.classList.toggle('focus-mode'); }
+
+        const questionsData = [
+            { q: "¿Qué es el temperamento según el documento?", opts: [{id:"c", text:"Conjunto de tendencias individuales que influyen en la intensidad de las emociones y rapidez de reacciones"}, {id:"w1", text:"Hábitos desarrollados exclusivamente por la educación formal"}, {id:"w2", text:"Un diagnóstico clínico inalterable de la personalidad"}], exp: "El temperamento son tendencias tempranas en reactividad emocional y respuesta al entorno." },
+            { q: "¿Cómo se define el carácter frente al temperamento?", opts: [{id:"c", text:"Hábitos y formas de actuar desarrollados mediante la educación, decisiones y valores"}, {id:"w1", text:"Tendencias biológicas heredadas de los humores corporales"}, {id:"w2", text:"La organización inconsciente de los deseos infantiles"}], exp: "El carácter se desarrolla mediante educación, decisiones y experiencias." },
+            { q: "¿A qué autores se asocia principalmente la clasificación tradicional de los cuatro temperamentos?", opts: [{id:"c", text:"Hipócrates y Galeno"}, {id:"w1", text:"Sigmund Freud y Carl Jung"}, {id:"w2", text:"Ivan Pavlov y Jean Piaget"}], exp: "Se asocia con Hipócrates y el desarrollo posterior de Galeno." },
+            { q: "En la teoría clásica de los humores, ¿con qué se asociaba el temperamento sanguíneo?", opts: [{id:"c", text:"Con la sangre"}, {id:"w1", text:"Con la bilis amarilla"}, {id:"w2", text:"Con la flema"}], exp: "El sanguíneo se asocia tradicionalmente con la sangre." },
+            { q: "En la teoría clásica, el temperamento colérico se asociaba con:", opts: [{id:"c", text:"La bilis amarilla"}, {id:"w1", text:"La bilis negra"}, {id:"w2", text:"La sangre"}], exp: "El colérico se asocia con la bilis amarilla." },
+            { q: "¿Cuál es el humor asociado tradicionalmente al temperamento melancólico?", opts: [{id:"c", text:"La bilis negra"}, {id:"w1", text:"La flema"}, {id:"w2", text:"La bilis amarilla"}], exp: "El melancólico se asocia con la bilis negra." },
+            { q: "¿Con qué humor se asociaba el temperamento flemático?", opts: [{id:"c", text:"La flema"}, {id:"w1", text:"La sangre"}, {id:"w2", text:"La bilis negra"}], exp: "El flemático se asocia con la flema." },
+            { q: "¿Cuál es una característica principal del temperamento sanguíneo?", opts: [{id:"c", text:"Sociabilidad, entusiasmo y facilidad para establecer relaciones"}, {id:"w1", text:"Tendencia excesiva a la preocupación y autocrítica"}, {id:"w2", text:"Calma extrema y evitación de conflictos"}], exp: "Se caracteriza por la sociabilidad, entusiasmo y expresividad." },
+            { q: "¿Qué rasgo distingue principalmente al temperamento colérico?", opts: [{id:"c", text:"Determinación, iniciativa y orientación hacia los objetivos"}, {id:"w1", text:"Pasividad y extrema paciencia ante los obstáculos"}, {id:"w2", text:"Reflexión detallada antes de actuar"}], exp: "Se asocia con intensidad emocional, iniciativa y determinación." },
+            { q: "El temperamento melancólico se relaciona con:", opts: [{id:"c", text:"Sensibilidad emocional, reflexión y atención a los detalles"}, {id:"w1", text:"Facilidad inmediata para iniciar relaciones grupales"}, {id:"w2", text:"Busca constante de liderazgo autoritario"}], exp: "Se relaciona con sensibilidad, reflexión y análisis profundo." },
+            { q: "¿Qué diferencia clave existe entre el temperamento melancólico y la depresión clínica?", opts: [{id:"c", text:"El melancólico es una categoría histórica de temperamento, no un diagnóstico clínico"}, {id:"w1", text:"No hay ninguna diferencia, son exactamente lo mismo"}, {id:"w2", text:"La depresión clínica es una teoría de Hipócrates"}], exp: "El melancólico procede de una categoría histórica y no constituye diagnóstico psicológico." },
+            { q: "¿Cuál es una característica central del temperamento flemático?", opts: [{id:"c", text:"Calma, estabilidad, paciencia y respuesta moderada ante conflictos"}, {id:"w1", text:"Impaciencia y agresividad ante los obstáculos"}, {id:"w2", text:"Entusiasmo desbordante en actividades grupales"}], exp: "Se caracteriza por calma, estabilidad y paciencia." },
+            { q: "Según el texto, ¿una persona puede tener más de un temperamento?", opts: [{id:"c", text:"Sí, puede reconocer características de varios temperamentos según el contexto"}, {id:"w1", text:"No, las personas pertenecen estrictamente a uno solo de por vida"}, {id:"w2", text:"Solo si han sido diagnosticadas por Sigmund Freud"}], exp: "Sí, las personas pueden reconocer rasgos de varios temperamentos." },
+            { q: "¿Cuál fue la contribución principal de Sigmund Freud al estudio de la personalidad?", opts: [{id:"c", text:"Propuso el inconsciente, las experiencias infantiles y los mecanismos de defensa"}, {id:"w1", text:"Formuló la teoría de los cuatro humores corporales"}, {id:"w2", text:"Demostró que el temperamento sanguíneo se origina en la sangre"}], exp: "Freud aportó el estudio del inconsciente, conflictos y experiencias infantiles." },
+            { q: "¿Qué aspecto destaca el texto sobre las etapas de la vida y el temperamento?", opts: [{id:"c", text:"Las tendencias temperamentales se expresan y modulan con el aprendizaje y la experiencia vital"}, {id:"w1", text:"El temperamento se fija de manera inalterable en la vejez"}, {id:"w2", text:"No existe ninguna relación entre edad y conducta"}], exp: "Las experiencias y el aprendizaje influyen en la expresión de las tendencias a lo largo de la vida." },
+            { q: "¿Cuál es una dificultad posible asociada al temperamento sanguíneo?", opts: [{id:"c", text:"Posible distracción o falta de constancia en tareas prolongadas"}, {id:"w1", text:"Tendencia a evitar conflictos de forma pasiva"}, {id:"w2", text:"Autocrítica y perfeccionismo excesivo"}], exp: "Una dificultad posible es la distracción o falta de constancia." },
+            { q: "¿Qué dificultad posible se menciona para el temperamento colérico?", opts: [{id:"c", text:"Impaciencia ante los obstáculos o reacciones intensas"}, {id:"w1", text:"Pasividad extrema ante los problemas"}, {id:"w2", text:"Dificultad para iniciar relaciones sociales"}], exp: "Puede manifestar impaciencia o reacciones intensas bajo presión." },
+            { q: "¿Qué aspecto puede desarrollar una persona con temperamento melancólico?", opts: [{id:"c", text:"Flexibilidad, confianza en sus decisiones y manejo de la preocupación"}, {id:"w1", text:"Impulsividad extrema en la toma de decisiones"}, {id:"w2", text:"Liderazgo autoritario sin planificación"}], exp: "Puede desarrollar flexibilidad, confianza y manejo de la preocupación." },
+            { q: "Cuál es una fortaleza habitual del temperamento flemático:", opts: [{id:"c", text:"Paciencia, estabilidad y disposición para mediar en conflictos"}, {id:"w1", text:"Generar entusiasmo inmediato en grandes multitudes"}, {id:"w2", text:"Iniciativa rápida y competitividad intensa"}], exp: "Sus fortalezas incluyen paciencia, estabilidad y mediación." },
+            { q: "¿Cuál es la conclusión central del documento respecto a los temperamentos?", opts: [{id:"c", text:"Sirven para reflexionar sobre fortalezas y dificultades sin encasillar rígidamente a las personas"}, {id:"w1", text:"Permiten predecir con exactitud matemática el futuro profesional"}, {id:"w2", text:"Demuestran que ciertos seres humanos son superiores a otros"}], exp: "Favorecen la empatía y autocomprensión evitando etiquetas rígidas." }
+        ];
+
+        let studentName = "", currentQuestions = [], qIndex = 0, lives = 5, score = 0, correctCount = 0, errorCount = 0, unansweredCount = 0, timer = null, timeLeft = 35, quizStartTime = null;
+
+        function toggleStartQuizBtn() {
+            document.getElementById('btn-start-quiz').disabled = document.getElementById('student-name-input').value.trim().length === 0;
+        }
+
+        function shuffle(arr) {
+            let curr = arr.length, rand;
+            while (curr !== 0) {
+                rand = Math.floor(Math.random() * curr);
+                curr--;
+                [arr[curr], arr[rand]] = [arr[rand], arr[curr]];
+            }
+            return arr;
+        }
+
+        function initGamifiedQuiz() {
+            studentName = document.getElementById('student-name-input').value.trim();
+            document.getElementById('quiz-student-display').innerText = studentName;
+            currentQuestions = shuffle(JSON.parse(JSON.stringify(questionsData)));
+            currentQuestions.forEach(q => q.opts = shuffle(q.opts));
+            qIndex = 0; lives = 5; score = 0; correctCount = 0; errorCount = 0; unansweredCount = 0; quizStartTime = new Date();
+            document.getElementById('quiz-screen-start').style.display = 'none';
+            document.getElementById('quiz-screen-active').style.display = 'block';
+            document.getElementById('quiz-screen-report').style.display = 'none';
+            refreshQuizStats();
+            renderQuestion();
+        }
+
+        function refreshQuizStats() {
+            document.getElementById('quiz-lives').innerText = lives;
+            document.getElementById('quiz-score').innerText = score;
+            document.getElementById('quiz-current-num').innerText = qIndex + 1;
+        }
+
+        function renderQuestion() {
+            clearInterval(timer);
+            timeLeft = 35;
+            updateTimerBarUI();
+            const q = currentQuestions[qIndex];
+            document.getElementById('quiz-question-text').innerText = `${qIndex + 1}. ${q.q}`;
+            const grid = document.getElementById('quiz-options-grid');
+            grid.innerHTML = '';
+            const prefixes = ['A)', 'B)', 'C)'];
+            q.opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<strong style="color:var(--primary);">${prefixes[i]}</strong> ${opt.text}`;
+                btn.onclick = () => handleAnswerSelect(opt.id, btn);
+                grid.appendChild(btn);
+            });
+            document.getElementById('quiz-feedback-box').classList.remove('active');
+            document.getElementById('btn-next-question').style.display = 'none';
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerBarUI();
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerBarUI() {
+            const bar = document.getElementById('quiz-timer-bar');
+            const pct = (timeLeft / 35) * 100;
+            bar.style.width = pct + '%';
+            bar.classList.remove('warning', 'danger');
+            if (timeLeft <= 10 && timeLeft > 5) bar.classList.add('warning');
+            else if (timeLeft <= 5) bar.classList.add('danger');
+        }
+
+        function handleAnswerSelect(selectedId, btnElem) {
+            clearInterval(timer);
+            disableOptionBtns();
+            const q = currentQuestions[qIndex];
+            const isCorrect = selectedId === 'c';
+            if (isCorrect) {
+                btnElem.classList.add('correct');
+                score += 5;
+                correctCount++;
+                showFeedbackUI(true, "¡Excelente trabajo! Has identificado correctamente la respuesta. Continúa con ese nivel de concentración. — Instructor Melida Soto");
+            } else {
+                btnElem.classList.add('incorrect');
+                highlightCorrectOpt();
+                lives--;
+                errorCount++;
+                showFeedbackUI(false, `Esta vez no fue la opción correcta, pero cada pregunta es una oportunidad para aprender. Revisa el concepto: ${q.exp} — Instructor Melida Soto`);
+            }
+            refreshQuizStats();
+            document.getElementById('btn-next-question').style.display = 'block';
+            if (lives <= 0) setTimeout(finishQuiz, 2000);
+        }
+
+        function handleTimeOut() {
+            disableOptionBtns();
+            highlightCorrectOpt();
+            unansweredCount++;
+            lives--;
+            refreshQuizStats();
+            const q = currentQuestions[qIndex];
+            showFeedbackUI(false, `¡Tiempo agotado! Recuerda que dispones de 35 segundos por pregunta. Fundamento: ${q.exp} — Instructor Melida Soto`);
+            document.getElementById('btn-next-question').style.display = 'block';
+            if (lives <= 0) setTimeout(finishQuiz, 2000);
+        }
+
+        function disableOptionBtns() {
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        }
+
+        function highlightCorrectOpt() {
+            const q = currentQuestions[qIndex];
+            const correctIndex = q.opts.findIndex(o => o.id === 'c');
+            const btns = document.querySelectorAll('.option-btn');
+            if (btns[correctIndex]) btns[correctIndex].classList.add('correct');
+        }
+
+        function showFeedbackUI(isSuccess, text) {
+            const box = document.getElementById('quiz-feedback-box');
+            const title = document.getElementById('quiz-feedback-title');
+            const msg = document.getElementById('quiz-feedback-msg');
+            box.classList.add('active');
+            if (isSuccess) {
+                box.style.borderLeftColor = 'var(--success)';
+                title.innerText = 'Instructor Melida Soto (¡Acierto!)';
+                title.style.color = 'var(--success)';
+            } else {
+                box.style.borderLeftColor = 'var(--error)';
+                title.innerText = 'Instructor Melida Soto (Orientación)';
+                title.style.color = 'var(--error)';
+            }
+            msg.innerText = text;
+        }
+
+        function advanceQuizQuestion() {
+            qIndex++;
+            if (qIndex < currentQuestions.length && lives > 0) renderQuestion();
+            else finishQuiz();
+        }
+
+        function finishQuiz() {
+            clearInterval(timer);
+            const totalSecs = Math.floor((new Date() - quizStartTime) / 1000);
+            document.getElementById('quiz-screen-active').style.display = 'none';
+            document.getElementById('quiz-screen-report').style.display = 'block';
+            document.getElementById('final-score-val').innerText = score;
+            document.getElementById('rep-student').innerText = studentName;
+            document.getElementById('rep-correct').innerText = `${correctCount}/20`;
+            document.getElementById('rep-errors').innerText = errorCount;
+            document.getElementById('rep-unanswered').innerText = unansweredCount;
+            const m = Math.floor(totalSecs / 60), s = totalSecs % 60;
+            document.getElementById('rep-time').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+
+            const statusElem = document.getElementById('rep-status'), levelElem = document.getElementById('final-level-title'), commentElem = document.getElementById('final-instructor-comment');
+            if (score >= 70) {
+                statusElem.innerText = "APROBADO";
+                statusElem.style.color = "var(--success)";
+            } else {
+                statusElem.innerText = "EN PROCESO";
+                statusElem.style.color = "var(--accent)";
+            }
+
+            if (score >= 90) {
+                levelElem.innerText = "Nivel: Dominio Destacado";
+                commentElem.innerText = "¡Excelente trabajo! Has demostrado un dominio destacado de los contenidos. Tu esfuerzo y concentración se reflejan en este resultado. Continúa fortaleciendo tus conocimientos y mantén este nivel. — Instructor Melida Soto";
+            } else if (score >= 80) {
+                levelElem.innerText = "Nivel: Muy buen desempeño";
+                commentElem.innerText = "¡Muy buen trabajo! Has demostrado una comprensión sólida de los contenidos. Sigue practicando y profundizando en aquellos conceptos que todavía pueden fortalecerse. Vas por muy buen camino. — Instructor Melida Soto";
+            } else if (score >= 70) {
+                levelElem.innerText = "Nivel: Buen comienzo";
+                commentElem.innerText = "¡Buen trabajo! Has alcanzado el nivel de aprobación. Este resultado demuestra que estás avanzando. Continúa practicando y reforzando tus conocimientos; cada nuevo intento representa una oportunidad para mejorar. — Instructor Melida Soto";
+            } else {
+                levelElem.innerText = "Nivel: En proceso de aprendizaje";
+                commentElem.innerText = "Has completado la actividad. Este resultado es una excelente oportunidad para repasar los conceptos sobre temperamentos y desarrollo vital. ¡Sigue adelante con confianza, el aprendizaje continuo te llevará al éxito! — Instructor Melida Soto";
+            }
+        }
+
+        function restartGamifiedQuiz() {
+            document.getElementById('quiz-screen-report').style.display = 'none';
+            document.getElementById('quiz-screen-start').style.display = 'block';
+            toggleStartQuizBtn();
+        }
+    </script>
+</body>
+</html>
